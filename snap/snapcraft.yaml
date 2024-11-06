@@ -1,0 +1,56 @@
+name: xurlfind3r
+title: xurlfind3r
+summary: X URLs Finder (xurlfind3r)
+adopt-info: xurlfind3r
+description: |
+  xurlfind3r is a command-line utility designed to discover URLs for a given domain in a simple,
+  efficient way. It works by gathering information from a variety of passive sources, meaning it
+  doesn't interact directly with the target but instead gathers data that is already publicly
+  available. This makes xurlfind3r a powerful tool for security researchers, IT professionals, and
+  anyone looking to gain insights into the URLs associated with a domain.
+
+license: MIT
+source-code: https://github.com/hueristiq/xurlfind3r
+issues: https://github.com/kz6fittycent/xurlfind3r/issues
+contact: https://github.com/kz6fittycent/xurlfind3r
+ 
+base: core24
+grade: stable
+confinement: strict
+compression: lzo
+
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+  arm64:
+    build-on: [arm64]
+    build-for: [arm64]
+  armhf:
+    build-on: [armhf]
+    build-for: [armhf]
+  ppc64el:
+    build-on: [ppc64el]
+    build-for: [ppc64el]
+  s390x:
+    build-on: [s390x]
+    build-for: [s390x]
+
+apps:
+  xurlfind3r:
+    command: bin/xurlfind3r
+    plugs:
+      - home
+      - network
+
+parts:
+  xurlfind3r:
+    source: https://github.com/hueristiq/xurlfind3r
+    source-type: git
+    plugin: go
+    build-snaps:
+      - go
+      
+    override-pull: |
+      craftctl default
+      craftctl set version="$(git describe --tags | sed 's/^v//' | cut -d "-" -f1)"  
